@@ -15,7 +15,14 @@ class Process {
 public class CPU_Scheduler {
 
   public static void main(String[] args) {
+    // We're inputing two commands into the command line.
+    // javac CPU_Scheduler.java // To initialize the program
+    // java CPU_Scheduler <csv file path> 1 // To run the program with the CSV file
+    // and time quantum
+
     String fileName = args[0]; // First argument: the path to CSV file
+
+    // We are changing this five times 5 times to test the program.
     int timeQuantum = Integer.parseInt(args[1]); // Second argument: time quantum
 
     List<Process> processList = new ArrayList<>();
@@ -28,7 +35,7 @@ public class CPU_Scheduler {
   public static void readCSV(String fileName, List<Process> processList) {
     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
       String line;
-      br.readLine(); // Skip the header line
+      br.readLine(); // Skip the header line as thats where the column names are
       while ((line = br.readLine()) != null) {
         String[] fields = line.split(",");
         int pid = Integer.parseInt(fields[0].trim());
