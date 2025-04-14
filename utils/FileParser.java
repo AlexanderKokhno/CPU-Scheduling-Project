@@ -1,9 +1,13 @@
+package utils;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import src.scheduler.Process;
+import scheduler.Process;
+
+
 
 public class FileParser {
     public static List<Process> parseFile(String filePath) {
@@ -11,6 +15,7 @@ public class FileParser {
         
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
+            br.readLine(); // Skip the header line
             while ((line = br.readLine()) != null) {
                 String[] details = line.split(",");
                 int processId = Integer.parseInt(details[0].trim());

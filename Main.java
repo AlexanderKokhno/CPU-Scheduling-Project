@@ -1,4 +1,8 @@
 import java.util.List;
+import utils.FileParser;
+import scheduler.RoundRobinScheduler;
+import scheduler.Process;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -18,7 +22,8 @@ public class Main {
         }
 
         // Parse the input file to get the list of processes
-        List<Process> processes = FileParser.parseFile(filePath);
+        List<scheduler.Process> processes = FileParser.parseFile(filePath);
+
 
         // Initialize the scheduler and start the simulation
         RoundRobinScheduler scheduler = new RoundRobinScheduler(timeQuantum);
