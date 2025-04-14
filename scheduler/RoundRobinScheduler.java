@@ -22,12 +22,10 @@ public class RoundRobinScheduler {
             Process currentProcess = readyQueue.poll();
             if (currentProcess.getRemainingTime() > timeQuantum) {
                 currentProcess.setRemainingTime(currentProcess.getRemainingTime() - timeQuantum);
-                System.out.println(
-                        "Executing Process ID: " + currentProcess.getProcessId() + " for " + timeQuantum + " units.");
+                System.out.println("Executing Process ID: " + currentProcess.getProcessId() + " for " + timeQuantum + " units.");
                 readyQueue.add(currentProcess);
             } else {
-                System.out.println("Executing Process ID: " + currentProcess.getProcessId() + " for "
-                        + currentProcess.getRemainingTime() + " units.");
+                System.out.println("Executing Process ID: " + currentProcess.getProcessId() + " for " + currentProcess.getRemainingTime() + " units.");
                 currentProcess.setCompletionTime(currentProcess.getBurstTime() - currentProcess.getRemainingTime());
                 currentProcess.setRemainingTime(0);
                 // Calculate waiting and turnaround times here if needed

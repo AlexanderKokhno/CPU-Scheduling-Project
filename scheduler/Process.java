@@ -1,5 +1,3 @@
-package scheduler;
-
 public class Process {
     private int processId;
     private int arrivalTime;
