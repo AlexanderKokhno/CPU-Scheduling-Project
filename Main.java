@@ -16,7 +16,10 @@ public class Main {
         }
 
         // Initialize the scheduler and start the simulation
-        RoundRobinScheduler scheduler = new RoundRobinScheduler(filePath, timeQuantum);
-        scheduler.simulate();
+        RoundRobinScheduler scheduler = new RoundRobinScheduler(timeQuantum);
+        for (Process p : processes) {
+            scheduler.addProcess(p);
+        }
+        scheduler.execute();
     }
 }
