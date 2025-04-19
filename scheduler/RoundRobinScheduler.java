@@ -38,6 +38,14 @@ public class RoundRobinScheduler {
         // Execute processes with Round Robin logic
         while (!queue.isEmpty()) {
             Process currentProcess = queue.poll();
+
+            // If the current time is less than the process's arrival time, the CPU is idle
+            if (currentTime < currentProcess.getArrivalTime()) {
+                int idleTime = currentProcess.getArrivalTime() - currentTime;
+                System.out.println("CPU is idle for " + idleTime + " units.");
+                currentTime += idleTime; // Add idle time to currentTime
+            }
+
             int execTime = Math.min(timeQuantum, currentProcess.getRemainingTime());
 
             // Execute the process and update the current time
