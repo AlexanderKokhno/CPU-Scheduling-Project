@@ -1,4 +1,3 @@
-// This file implements the Round Robin scheduling algorithm.
 package scheduler;
 
 import java.util.ArrayList;
@@ -38,13 +37,12 @@ public class RoundRobinScheduler {
             if (currentTime < currentProcess.getArrivalTime()) {
                 int idleTime = currentProcess.getArrivalTime() - currentTime;
                 System.out.println("CPU is idle for " + idleTime + " units.");
-                currentTime += idleTime; // Add idle time to currentTime
+                currentTime += idleTime;
             }
 
             int execTime = Math.min(timeQuantum, currentProcess.getRemainingTime());
 
-            System.out
-                    .println("Executing Process ID: " + currentProcess.getProcessId() + " for " + execTime + " units.");
+            System.out.println("Executing Process ID: " + currentProcess.getProcessId() + " for " + execTime + " units.");
             currentTime += execTime;
             currentProcess.setRemainingTime(currentProcess.getRemainingTime() - execTime);
 
