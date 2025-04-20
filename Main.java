@@ -3,7 +3,6 @@ import utils.FileParser;
 import scheduler.RoundRobinScheduler;
 import scheduler.Process;
 
-
 public class Main {
     public static void main(String[] args) {
         if (args.length < 2) {
@@ -21,9 +20,9 @@ public class Main {
             return;
         }
 
-        // Parse the input file to get the list of processes
+        // Remember to insert your file path when you run the program, the timeQuantum
+        // as well (as an int)
         List<scheduler.Process> processes = FileParser.parseFile(filePath);
-
 
         // Initialize the scheduler and start the simulation
         RoundRobinScheduler scheduler = new RoundRobinScheduler(timeQuantum);
