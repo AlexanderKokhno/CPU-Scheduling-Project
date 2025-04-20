@@ -13,10 +13,10 @@ public class FileParser {
     public static List<Process> parseFile(String filePath) {
         List<Process> processList = new ArrayList<>();
         
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            br.readLine(); // Skip the header line
-            while ((line = br.readLine()) != null) {
+            bufferedReader.readLine();
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] details = line.split(",");
                 int processId = Integer.parseInt(details[0].trim());
                 int arrivalTime = Integer.parseInt(details[1].trim());
