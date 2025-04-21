@@ -1,6 +1,6 @@
 import java.util.List;
 import utils.FileParser;
-import scheduler.RoundRobinScheduler;
+import scheduler.PriorityRoundRobinScheduler;
 import scheduler.Process;
 
 public class Main {
@@ -25,9 +25,9 @@ public class Main {
         List<scheduler.Process> processes = FileParser.parseFile(filePath);
 
         // Initialize the scheduler and start the simulation
-        RoundRobinScheduler scheduler = new RoundRobinScheduler(timeQuantum);
+        PriorityRoundRobinScheduler scheduler = new PriorityRoundRobinScheduler(timeQuantum);
         for (Process p : processes) {
-            scheduler.addProcess(p);
+            scheduler.addProcess(p, 0);
         }
         scheduler.execute();
     }
