@@ -25,8 +25,8 @@ public class RoundRobinScheduler {
         int currentTime = 0;
         int totalBurstTime = 0;
 
-        for (Process process : readyQueue) {
-            totalBurstTime += process.getBurstTime();
+        for (Process p : readyQueue) {
+            totalBurstTime += p.getBurstTime();
         }
 
         Queue<Process> queue = new LinkedList<>(readyQueue);
@@ -54,29 +54,29 @@ public class RoundRobinScheduler {
             }
         }
 
-        int totalWaitingTime = 0;
-        int totalTurnaroundTime = 0;
+        int totalWT = 0;
+        int totalTAT = 0;
 
         System.out.println("\n=== Final Metrics ===");
         System.out.printf("%-10s%-18s%-20s\n", "Process", "Waiting Time", "Turnaround Time");
         for (Process p : completedProcesses) {
-            int waitingTime = p.calculateWaitingTime();
-            int turnaroundTime = p.calculateTurnaroundTime();
-            totalWaitingTime += waitingTime;
-            totalTurnaroundTime += turnaroundTime;
+            int wt = p.calculateWaitingTime();
+            int tat = p.calculateTurnaroundTime();
+            totalWT += wt;
+            totalTAT += tat;
 
             System.out.printf("%-10d%-18d%-20d\n", p.getProcessId(), wt, tat);
         }
 
-        double averageWaitingTime = totalWaitingTime / (double) completedProcesses.size();
-        double averageTurnaroundTime = totalTurnaroundTime / (double) completedProcesses.size();
+        double avgWT = totalWT / (double) completedProcesses.size();
+        double avgTAT = totalTAT / (double) completedProcesses.size();
         double throughput = (double) completedProcesses.size() / (double) currentTime;
 
         double cpuUtilization = (totalBurstTime / (double) currentTime) * 100;
 
         System.out.printf("CPU Utilization: %.2f%%\n", cpuUtilization);
         System.out.printf("Throughput: %.2f processes/unit time\n", throughput);
-        System.out.printf("\nAverage Waiting Time: %.2f\n", averageWaitingTime);
-        System.out.printf("Average Turnaround Time: %.2f\n", averageTurnaroundTime);
+        System.out.printf("\nAverage Waiting Time: %.2f\n", avgWT);
+        System.out.printf("Average Turnaround Time: %.2f\n", avgTAT);
     }
 }
