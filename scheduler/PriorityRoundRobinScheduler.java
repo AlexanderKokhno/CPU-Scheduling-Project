@@ -6,6 +6,7 @@ public class PriorityRoundRobinScheduler {
     private Map<Integer, Queue<Process>> priorityQueues;
     private int timeQuantum;
     private static final int AGING_THRESHOLD = 7;
+    private int contextSwitchTime = 1;
 
     public PriorityRoundRobinScheduler(int timeQuantum) {
         this.priorityQueues = new TreeMap<>();
@@ -47,12 +48,13 @@ public class PriorityRoundRobinScheduler {
 
     public void execute() {
         System.out.println("Starting Priority Round Robin Scheduling with Time Quantum: " + timeQuantum + "\n");
-        System.out
-                .println("Starting Priority Round Robin Scheduling with Aging Threshold at: " + AGING_THRESHOLD + "\n");
+        System.out.println("Aging Threshold at: " + AGING_THRESHOLD + "\n");
+        System.out.println("Context Switching time at: " + contextSwitchTime + "\n");
 
         List<Process> completedProcesses = new ArrayList<>();
         int currentTime = 0;
         int totalBurstTime = 0;
+        int totalContextSwitchTime = 0;
 
         List<Process> allProcesses = new ArrayList<>();
         for (Queue<Process> queue : priorityQueues.values()) {
@@ -99,6 +101,10 @@ public class PriorityRoundRobinScheduler {
                         + ") for " + execTime + " units.");
 
                 currentTime += execTime;
+                if (!queue.isEmpty() || current.getRemainingTime() > 0) {
+                    currentTime += contextSwitchTime;
+                    totalContextSwitchTime += contextSwitchTime;
+                }
                 current.setRemainingTime(current.getRemainingTime() - execTime);
                 applyAging(currentTime);
 
@@ -142,8 +148,9 @@ public class PriorityRoundRobinScheduler {
         double averageWaitingTime = totalWaitingTime / (double) completedProcesses.size();
         double averageTurnaroundTime = totalTurnaroundTime / (double) completedProcesses.size();
         double throughput = completedProcesses.size() / (double) currentTime;
-        double cpuUtilization = (totalBurstTime / (double) currentTime) * 100;
+        double cpuUtilization = ((totalBurstTime) / (double) (currentTime)) * 100;
 
+        System.out.printf("Total Context Switching Time: %d units\n", totalContextSwitchTime);
         System.out.printf("\nCPU Utilization: %.2f%%\n", cpuUtilization);
         System.out.printf("Throughput: %.2f processes/unit time\n", throughput);
         System.out.printf("Average Waiting Time: %.2f\n", averageWaitingTime);
